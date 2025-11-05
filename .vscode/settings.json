@@ -1,0 +1,12 @@
+{
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "mcp.servers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "env": {
+        "CONTEXT7_API_KEY": "ctx7sk-d8939674-e87c-4901-af5a-dca7f22ea8e0"
+      }
+    }
+  }
+}
