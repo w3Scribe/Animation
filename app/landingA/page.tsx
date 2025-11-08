@@ -1,9 +1,9 @@
 "use client";
 
-import Button from "@/components/Button";
-import Label from "@/components/Label";
-import Navbar from "@/components/Navbar";
-import { HeartPulse, Star } from "lucide-react";
+import Button from '@/app/landingA/Button';
+import Label from '@/app/landingA/Label';
+import Navbar from '@/app/landingA/Navbar';
+import { HeartPulse, Star } from 'lucide-react';
 import Image from "next/image";
 
 export default function Page() {

@@ -1,4 +1,4 @@
-import Button from "@/components/Button";
+import Button from "@/app/landingA/Button";
 import { MoveRight } from "lucide-react";
 
 const Navbar = () => {
