@@ -19,7 +19,12 @@ const Navbar = () => {
       </ul>
 
       {/* button */}
-      <Button icon className="justify-self-end" style="primary">
+      <Button
+        icon
+        className="justify-self-end"
+        style="primary"
+        cursor="pointer"
+      >
         Get In Touch <MoveRight size={18} />
       </Button>
     </header>
