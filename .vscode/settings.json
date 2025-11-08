@@ -31,5 +31,18 @@
     "typescriptreact"
   ],
   "prettier.requireConfig": false,
-  "prettier.useEditorConfig": true
+  "prettier.useEditorConfig": true,
+  "prettier.enable": true,
+  "prettier.resolveGlobalModules": true,
+  "editor.trimAutoWhitespace": true,
+  "emeraldwalk.runonsave": {
+    "autoClearConsole": true,
+    "commands": [
+      {
+        "match": ".*\\.(tsx?|jsx?|css|scss|json|md)$",
+        "isAsync": true,
+        "cmd": "npx prettier --write ${file}"
+      }
+    ]
+  }
 }
