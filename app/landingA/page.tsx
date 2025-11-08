@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
 import Button from '@/app/landingA/Button';
 import Label from '@/app/landingA/Label';
 import Navbar from '@/app/landingA/Navbar';
 import { HeartPulse, Star } from 'lucide-react';
-import Image from "next/image";
+import Image from 'next/image';
 
 export default function Page() {
   return (
@@ -19,7 +19,7 @@ export default function Page() {
           </Label>
 
           <h1 className=" leading-12 text-gray-800  mt-4 text-5xl text-balance font-bold">
-            Transforming the Future of Healthcare with{" "}
+            Transforming the Future of Healthcare with{' '}
             <span className="font-black text-green-500">GCHealth</span>
           </h1>
 

@@ -1,8 +1,8 @@
-import Button from "@/app/landingA/Button";
-import { MoveRight } from "lucide-react";
+import Button from '@/app/landingA/Button';
+import { MoveRight } from 'lucide-react';
 
 const Navbar = () => {
-  const NavLinks = ["Home", "About", "Services", "Contact"];
+  const NavLinks = ['Home', 'About', 'Services', 'Contact'];
 
   return (
     <header className="relative w-full py-4 px-24 grid grid-cols-3 items-center">
