@@ -1,86 +1,47 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { FC, useCallback, useState } from 'react';
-
-const TABS = ['Home', 'About', 'Contact'] as const;
-
-interface HighlightRect {
-  width: number;
-  height: number;
-  left: number;
-  opacity: number;
-}
-
-interface TabProps {
-  name: (typeof TABS)[number];
-  onHover: (rect: HighlightRect) => void;
-}
-
-const TabHighlighter: FC<{ rect: HighlightRect }> = ({ rect }) => {
-  return (
-    <motion.div
-      animate={{
-        height: rect.height,
-        width: rect.width,
-        left: rect.left,
-        opacity: rect.opacity,
-      }}
-      transition={{ type: 'spring', stiffness: 600, damping: 30 }}
-      className="pointer-events-none absolute z-0 rounded-full bg-gray-900 opacity-0"
-    ></motion.div>
-  );
-};
-
-const Tab: FC<TabProps> = ({ name, onHover }) => {
-  return (
-    <div
-      onMouseEnter={e => {
-        const rectBounding = (
-          e.currentTarget as HTMLDivElement
-        ).getBoundingClientRect();
-
-        onHover({
-          width: rectBounding.width,
-          height: rectBounding.height,
-          left: e.currentTarget.offsetLeft,
-          opacity: 1,
-        });
-      }}
-      className="relative z-10 cursor-pointer px-3 py-1.5 font-semibold text-white uppercase mix-blend-difference select-none"
-    >
-      {name}
-    </div>
-  );
-};
-
-// Tab navigation container
-const TabNav = () => {
-  const [rect, setRect] = useState<HighlightRect>({
-    width: 0,
-    height: 0,
-    left: 0,
-    opacity: 0,
-  });
-  const handleHover = useCallback((r: HighlightRect) => setRect(r), []);
-
-  return (
-    <div
-      className="relative isolate flex items-center gap-x-1 rounded-full border-2 border-gray-700 bg-white p-0.5 shadow-sm"
-      onMouseLeave={() => setRect(r => ({ ...r, opacity: 0 }))}
-    >
-      {TABS.map(name => (
-        <Tab key={name} name={name} onHover={handleHover} />
-      ))}
-      <TabHighlighter rect={rect} />
-    </div>
-  );
-};
+import { useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 export default function Page() {
+  const [isOn, setIsOn] = useState(false);
+
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
-    <div className="grid h-screen w-full place-items-center">
-      <TabNav />
+    <div className="grid h-screen w-full place-items-center bg-slate-900">
+      <motion.div
+        animate={{
+          backgroundColor: isOn
+            ? 'rgba(13, 148, 136, 0.3)'
+            : 'rgba(13, 148, 136, 0.15)',
+        }}
+        transition={{ duration: 0.3 }}
+        className={twMerge(
+          'flex h-10 w-24 items-center rounded-full border border-teal-700 px-1',
+          isOn ? 'justify-end' : 'justify-start'
+        )}
+        onMouseEnter={() => setIsFocused(true)}
+        onMouseLeave={() => setIsFocused(false)}
+      >
+        <motion.div
+          layout
+          animate={{
+            rotate: isOn ? 360 : 0,
+            scale: isOn ? 1.1 : 1,
+            borderColor: isFocused ? 'rgb(20 184 166)' : 'transparent',
+          }}
+          transition={{
+            layout: { type: 'spring', stiffness: 500, damping: 35, mass: 0.7 },
+            rotate: { type: 'spring', stiffness: 300, damping: 25 },
+            scale: { type: 'spring', stiffness: 400, damping: 20 },
+          }}
+          whileTap={{ scale: 0.9 }}
+          className="size-8 cursor-pointer rounded-full border-2 border-transparent bg-linear-to-br from-teal-500 to-teal-700 shadow-lg"
+          onClick={() => setIsOn(!isOn)}
+        />
+      </motion.div>
     </div>
   );
 }
