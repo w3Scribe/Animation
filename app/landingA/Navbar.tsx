@@ -5,12 +5,12 @@ const Navbar = () => {
   const NavLinks = ['Home', 'About', 'Services', 'Contact'];
 
   return (
-    <header className="relative w-full py-4 px-24 grid grid-cols-3 items-center">
+    <header className="relative grid w-full grid-cols-3 items-center px-24 py-4">
       {/* logo */}
       <h1 className="text-xl font-bold">GCHealth 🦋</h1>
 
       {/* Links */}
-      <ul className="flex gap-3 items-center justify-center cursor-pointer">
+      <ul className="flex cursor-pointer       items-center justify-center gap-3">
         {NavLinks.map((name, key) => (
           <li key={key + name} className="hover:text-green-600">
             {name}

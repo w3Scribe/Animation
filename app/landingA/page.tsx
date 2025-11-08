@@ -10,15 +10,15 @@ export default function Page() {
   return (
     <>
       <Navbar />
-      <main className="px-24 my-12 grid grid-cols-2 gap-6 justify-items-end items-center">
+      <main className="my-12 grid grid-cols-2 items-center justify-items-end gap-6 px-24">
         {/* left container */}
-        <div className=" flex flex-col items-start">
-          <Label className="px-3 py-0.5 bg-green-200/75 text-green-700 capitalize rounded-full text-xs relative inline-flex items-center gap-1 justify-self-start">
+        <div className="flex flex-col items-start">
+          <Label className="relative inline-flex items-center gap-1 justify-self-start rounded-full bg-green-200/75 px-3 py-0.5 text-xs text-green-700 capitalize">
             <HeartPulse size={12} />
             100% Health Guaranteed
           </Label>
 
-          <h1 className=" leading-12 text-gray-800  mt-4 text-5xl text-balance font-bold">
+          <h1 className="mt-4 text-5xl leading-12 font-bold text-balance text-gray-800">
             Transforming the Future of Healthcare with{' '}
             <span className="font-black text-green-500">GCHealth</span>
           </h1>
@@ -28,7 +28,7 @@ export default function Page() {
             expert care - all in one app.
           </p>
 
-          <div className="space-x-2 mt-4">
+          <div className="mt-4 space-x-2">
             <Button style="primary">Start Free Trial</Button>
             <Button style="secondary">Watch Demo</Button>
           </div>

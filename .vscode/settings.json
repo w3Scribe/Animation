@@ -1,12 +1,8 @@
 {
   "typescript.tsdk": "node_modules\\typescript\\lib",
-  "mcp.servers": {
-    "context7": {
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp@latest"],
-      "env": {
-        "CONTEXT7_API_KEY": "ctx7sk-d8939674-e87c-4901-af5a-dca7f22ea8e0"
-      }
-    }
-  }
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 1000,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
 }
