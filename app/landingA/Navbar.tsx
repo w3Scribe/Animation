@@ -10,7 +10,7 @@ const Navbar = () => {
       <h1 className="text-xl font-bold">GCHealth 🦋</h1>
 
       {/* Links */}
-      <ul className="flex cursor-pointer       items-center justify-center gap-3">
+      <ul className="flex cursor-pointer items-center justify-center gap-3">
         {NavLinks.map((name, key) => (
           <li key={key + name} className="hover:text-green-600">
             {name}
