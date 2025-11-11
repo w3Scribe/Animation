@@ -2,40 +2,61 @@
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+
+
+gsap.registerPlugin(useGSAP)
+
+// 1️⃣ Define interface for better type safety & reusability
+interface SpinnerEffectVars extends gsap.TweenVars {
+  isInfinite?: boolean;
+}
+
+// 2️⃣ Register effect at module scope (runs once)
+gsap.registerEffect({
+  name: 'spinner',
+  effect: (target: gsap.TweenTarget, config: SpinnerEffectVars = {}) => {
+    // 3️⃣ Use gsap.TweenTarget (supports string selectors, arrays, etc.)
+    return gsap.to(target, {
+      ...config,
+      repeat: config.isInfinite ? -1 : 0,
+      yoyo: config.isInfinite ?? false, // 4️⃣ Fix typo: yo → yoyo
+      ease: 'linear',
+    });
+  },
+  defaults: { isInfinite: true, duration: 1, rotate: 360 },
+  extendTimeline: true,
+});
+
+// 5️⃣ Optional: Augment types for IntelliSense (add to types/gsap-effects.d.ts)
+declare module 'gsap' {
+  interface GSAPEffects {
+    spinner(
+      target: gsap.TweenTarget,
+      vars?: SpinnerEffectVars
+    ): gsap.core.Tween;
+  }
+}
 
 export default function Page() {
   const boxRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    gsap.registerEffect({
-      name: 'fade',
-      effect: (
-        target: HTMLElement,
-        // use a proper config type; make properties optional so defaults apply
-        config: gsap.TweenVars & { opacity?: number; duration?: number }
-      ) => {
-        return gsap.to(target, {
-          opacity: config.opacity,
-          duration: config.duration,
-          repeat: 1,
-          yoyo: true,
-        });
-      },
-
-      defaults: { opacity: 0, duration: 1 },
-      extendTimeline: true,
-    });
-  }, []);
-
-  useGSAP(() => {
-    if (boxRef.current)
-      (gsap.effects as any).fade(boxRef.current, { opacity: 0.5, duration: 1 });
-  });
+  useGSAP(
+    () => {
+      // 6️⃣ Remove null check (useGSAP scope handles it)
+      gsap.effects.spinner(boxRef.current!, { isInfinite: false });
+    },
+    { scope: boxRef } // 7️⃣ Add scope for better cleanup
+  );
 
   return (
     <div className="h-screen bg-zinc-900 p-4">
-      <div className="size-20 rounded-md bg-teal-600" ref={boxRef}></div>
+      <div
+        ref={boxRef}
+        className="grid size-32 place-items-center rounded-md bg-amber-500 font-bold text-black"
+      >
+        Spinner
+      </div>
     </div>
   );
 }
