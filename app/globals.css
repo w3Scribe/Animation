@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
 * {
-  user-select: none;
+  /* Support for Safari (WebKit), Firefox (old), IE10+, and the standard property */
+  -webkit-user-select: none; /* Safari 3+, iOS 3+ */
+  -moz-user-select: none; /* Old Firefox */
+  -ms-user-select: none; /* IE10+ */
+  user-select: none; /* Standard */
 }
