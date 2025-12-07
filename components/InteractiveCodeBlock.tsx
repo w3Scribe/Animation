@@ -16,22 +16,31 @@ function extractTextContent(node: React.ReactNode): string {
   return '';
 }
 
-// Preview marker constants
-const PREVIEW_START = '// @preview-start';
-const PREVIEW_END = '// @preview-end';
+// Preview marker constants - using regex for more flexible matching
+const PREVIEW_START_REGEX = /\/\/\s*@preview-start/;
+const PREVIEW_END_REGEX = /\/\/\s*@preview-end/;
 
 // Extract preview HTML from code using markers
 function extractPreviewHTML(code: string): string | null {
-  const startIndex = code.indexOf(PREVIEW_START);
-  const endIndex = code.indexOf(PREVIEW_END);
+  const startMatch = code.match(PREVIEW_START_REGEX);
+  const endMatch = code.match(PREVIEW_END_REGEX);
 
-  if (startIndex === -1 || endIndex === -1 || endIndex <= startIndex) {
+  if (!startMatch || !endMatch) {
+    console.log('[extractPreviewHTML] Markers not found. Start:', !!startMatch, 'End:', !!endMatch);
     return null;
   }
 
-  const previewContent = code
-    .substring(startIndex + PREVIEW_START.length, endIndex)
-    .trim();
+  const startIndex = startMatch.index! + startMatch[0].length;
+  const endIndex = code.search(PREVIEW_END_REGEX);
+
+  if (endIndex <= startIndex) {
+    console.log('[extractPreviewHTML] Invalid marker positions');
+    return null;
+  }
+
+  const previewContent = code.substring(startIndex, endIndex).trim();
+
+  console.log('[extractPreviewHTML] Extracted content:', previewContent);
 
   // Return null if content is empty
   if (!previewContent) {
@@ -62,6 +71,9 @@ export function InteractiveCodeBlock({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const codeText = extractTextContent(children);
+
+  // Debug: Log the extracted code
+  console.log('[InteractiveCodeBlock] codeText:', JSON.stringify(codeText));
 
   // Extract language from data attribute
   const dataLanguage = (props as { 'data-language'?: string })['data-language'];

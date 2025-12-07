@@ -1,39 +1,21 @@
 'use client';
 
+import { buildNavigation } from '@/lib/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { BookOpen, ChevronDown, Layers, Menu, Sparkles, X } from 'lucide-react';
+import { ChevronDown, Menu, X, type LucideIcon } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
-// Navigation structure with icons
-const navigation = [
-  {
-    title: 'Getting Started',
-    icon: BookOpen,
-    href: '/learn/getting-started',
-  },
-  {
-    title: 'GSAP',
-    icon: Layers,
-    children: [
-      { title: 'Basics', href: '/learn/gsap/basics' },
-      { title: 'useGSAP Hook', href: '/learn/gsap/usegasap-hook' },
-      { title: 'from() Method', href: '/learn/gsap/from-method' },
-      { title: 'fromTo() Method', href: '/learn/gsap/fromto-method' },
-      { title: 'Timeline', href: '/learn/gsap/timeline-method' },
-    ],
-  },
-  {
-    title: 'Framer Motion',
-    icon: Sparkles,
-    children: [
-      { title: 'Introduction', href: '/learn/framer-motion/introduction' },
-    ],
-  },
-];
+// Build navigation dynamically from the single source of truth
+const navigation = buildNavigation();
 
-type NavItem = (typeof navigation)[number];
+type NavItem = {
+  title: string;
+  icon: LucideIcon;
+  href?: string;
+  children?: Array<{ title: string; href: string }>;
+};
 
 function NavLink({
   href,

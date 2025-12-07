@@ -1,6 +1,7 @@
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
+import { docOrder } from './navigation';
 
 const DOCS_PATH = path.join(process.cwd(), 'doc');
 
@@ -16,20 +17,6 @@ export type NavLink = {
   title: string;
   href: string;
 } | null;
-
-// Ordered list of all documentation pages for navigation
-const docOrder = [
-  { slug: ['getting-started'], title: 'Getting Started' },
-  { slug: ['gsap', 'basics'], title: 'GSAP Basics' },
-  { slug: ['gsap', 'usegasap-hook'], title: 'useGSAP Hook' },
-  { slug: ['gsap', 'from-method'], title: 'from() Method' },
-  { slug: ['gsap', 'fromto-method'], title: 'fromTo() Method' },
-  { slug: ['gsap', 'timeline-method'], title: 'Timeline' },
-  {
-    slug: ['framer-motion', 'introduction'],
-    title: 'Framer Motion Introduction',
-  },
-];
 
 function getFiles(dir: string): string[] {
   if (!fs.existsSync(dir)) return [];
