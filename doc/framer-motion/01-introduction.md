@@ -29,7 +29,7 @@ npm install framer-motion
 
 ## Basic Animation
 
-```jsx
+```jsx interactive="framer-motion-basic"
 import { motion } from 'framer-motion';
 
 export default function Box() {

@@ -271,7 +271,7 @@ export function MobileMenuButton() {
       <button
         onClick={() => setIsOpen(true)}
         title="Open menu"
-        className="fixed top-4 left-4 z-30 rounded-lg bg-[#0d0e11] p-3 text-white shadow-lg ring-1 ring-white/10 transition-all hover:ring-[#6D43FF]/50 lg:hidden"
+        className="fixed top-4 left-4 z-30 flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-[#0d0e11] p-3 text-white shadow-lg ring-1 ring-white/10 transition-all hover:ring-[#6D43FF]/50 lg:hidden"
       >
         <Menu size={20} />
       </button>

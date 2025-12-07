@@ -2,6 +2,7 @@
 import { ReactLenis } from 'lenis/react';
 import React from 'react';
 import { DocsNavigation } from './DocsNavigation';
+import { MobileTableOfContents } from './MobileTableOfContents';
 import { PageTransition } from './PageTransition';
 import { MobileMenuButton, Sidebar } from './Sidebar';
 import { Toc } from './Toc';
@@ -28,6 +29,9 @@ export function DocsLayout({
         {/* Mobile menu button */}
         <MobileMenuButton />
 
+        {/* Mobile Table of Contents FAB */}
+        <MobileTableOfContents items={toc} />
+
         <div className="flex justify-center">
           {/* Sidebar */}
           <Sidebar />
@@ -35,9 +39,9 @@ export function DocsLayout({
           {/* Main Content */}
           <article
             id="main-content"
-            className="w-full max-w-[900px] px-8 pt-8 pb-12"
+            className="w-full max-w-[900px] min-w-[280px] space-y-8 px-5 pt-8 pb-12 leading-relaxed md:space-y-12 md:px-8"
           >
-            <div className="rounded-2xl bg-white/2 p-8 pt-6 shadow-xl ring-1 shadow-black/20 ring-white/5">
+            <div className="rounded-2xl bg-white/2 p-5 pt-6 shadow-xl ring-1 shadow-black/20 ring-white/5 md:p-8">
               <PageTransition>
                 {children}
                 {(prev || next) && (

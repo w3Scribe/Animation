@@ -1,6 +1,8 @@
 import { DocsLayout } from '@/components/DocsLayout';
 import { mdxComponents } from '@/components/mdx-components';
 import { getAllDocSlugs, getDocBySlug, getDocNavigation } from '@/lib/docs';
+import { rehypePreserveMeta } from '@/lib/rehype-preserve-meta';
+import { remarkPreserveMeta } from '@/lib/remark-preserve-meta';
 import { getBaseUrl, resolveSeoImage, siteConfig } from '@/lib/seo';
 import { Metadata } from 'next';
 import { MDXRemote } from 'next-mdx-remote/rsc';
@@ -98,7 +100,7 @@ export default async function Page({
         components={mdxComponents}
         options={{
           mdxOptions: {
-            remarkPlugins: [remarkGfm],
+            remarkPlugins: [remarkGfm, remarkPreserveMeta],
             rehypePlugins: [
               rehypeSlug,
               [
@@ -117,6 +119,7 @@ export default async function Page({
                   keepBackground: false,
                 },
               ],
+              rehypePreserveMeta,
             ],
           },
         }}

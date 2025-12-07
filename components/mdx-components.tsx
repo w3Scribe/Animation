@@ -1,16 +1,34 @@
 import { CodeBlock } from '@/components/CodeBlock';
+import { InteractiveCodeBlock } from '@/components/InteractiveCodeBlock';
+import { hasExample } from '@/lib/examples';
 import type { MDXComponents } from 'mdx/types';
+
+// Custom pre component that detects interactive code blocks
+function PreComponent(props: React.ComponentProps<'pre'>) {
+  // Check for interactive meta attribute from rehype-pretty-code
+  const meta = (props as { 'data-meta'?: string })['data-meta'] || '';
+  const interactiveMatch = meta.match(/interactive="([^"]+)"/);
+
+  if (interactiveMatch) {
+    const exampleId = interactiveMatch[1];
+    if (hasExample(exampleId)) {
+      return <InteractiveCodeBlock exampleId={exampleId} {...props} />;
+    }
+  }
+
+  return <CodeBlock {...props} />;
+}
 
 export const mdxComponents: MDXComponents = {
   h1: ({ children }) => (
-    <h1 className="mb-6 text-4xl font-extrabold tracking-tight text-white">
+    <h1 className="mb-4 text-3xl font-extrabold tracking-tight text-white md:mb-6 md:text-4xl">
       {children}
     </h1>
   ),
   h2: ({ children, id }) => (
     <h2
       id={id}
-      className="mt-10 mb-4 scroll-m-24 text-2xl font-bold text-white first:mt-0"
+      className="mt-8 mb-4 scroll-m-24 border-b border-white/5 pb-6 text-2xl font-bold text-white first:mt-0 md:mt-10 md:text-2xl"
     >
       {children}
     </h2>
@@ -18,28 +36,32 @@ export const mdxComponents: MDXComponents = {
   h3: ({ children, id }) => (
     <h3
       id={id}
-      className="mt-6 mb-3 scroll-m-24 text-xl font-semibold text-white/90"
+      className="mt-6 mb-3 scroll-m-24 text-lg font-semibold text-white/90 md:mt-8 md:mb-4 md:text-xl"
     >
       {children}
     </h3>
   ),
   p: ({ children }) => (
-    <p className="mb-6 leading-8 text-white/85">{children}</p>
+    <p className="mt-6 mb-4 text-base leading-relaxed text-white/85 md:mt-8 md:mb-6 md:leading-8">
+      {children}
+    </p>
   ),
   ul: ({ children }) => (
-    <ul className="mb-8 list-disc space-y-2 pl-6 text-white/80">{children}</ul>
+    <ul className="mt-6 mb-6 list-disc space-y-2 pl-5 text-base text-white/80 md:mt-8 md:mb-8 md:pl-6 md:text-inherit">
+      {children}
+    </ul>
   ),
   ol: ({ children }) => (
-    <ol className="mb-8 list-decimal space-y-2 pl-6 text-white/80">
+    <ol className="mt-6 mb-6 list-decimal space-y-2 pl-5 text-base text-white/80 md:mt-8 md:mb-8 md:pl-6 md:text-inherit">
       {children}
     </ol>
   ),
   li: ({ children }) => (
-    <li className="flex items-start leading-7">
+    <li className="mb-2 flex items-start leading-relaxed md:leading-7">
       <span className="flex-1">{children}</span>
     </li>
   ),
-  pre: CodeBlock,
+  pre: PreComponent,
   // Inline code styling handled by CSS (:not(pre) > code in globals.css)
   // Don't style <code> here as it breaks code blocks (code inside pre)
   table: ({ children }) => (

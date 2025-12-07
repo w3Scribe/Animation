@@ -30,7 +30,7 @@ export function CodeBlock({ children, ...props }: React.ComponentProps<'pre'>) {
   };
 
   return (
-    <div className="group relative my-10 overflow-hidden rounded-lg bg-[#0f0f13] ring-1 ring-white/6">
+    <div className="group relative mx-3 my-6 overflow-hidden rounded-xl bg-[#0f0f13] shadow-lg ring-1 shadow-black/20 ring-white/6 md:mx-0 md:my-10">
       {language && (
         <div className="absolute top-3 left-4 z-10 text-xs font-medium tracking-wider text-[#5c6370] uppercase">
           {language}
@@ -46,7 +46,7 @@ export function CodeBlock({ children, ...props }: React.ComponentProps<'pre'>) {
       </div>
       <pre
         {...props}
-        className="overflow-x-auto p-6 pt-10 font-mono text-sm leading-relaxed"
+        className="overflow-x-auto p-4 pt-10 font-mono text-sm leading-relaxed md:p-6"
       >
         {children}
       </pre>

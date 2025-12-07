@@ -48,7 +48,7 @@ tl.to(box1, { x: 100, duration: 1 })
 
 ## Basic Syntax
 
-```tsx
+```tsx interactive="gsap-timeline-basic"
 // Create timeline
 const tl = gsap.timeline();
 
