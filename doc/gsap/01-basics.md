@@ -57,13 +57,15 @@ npm install gsap @gsap/react
 
 ## Basic Syntax
 
-```tsx
-gsap.to(target, {
-  // Animation properties
-  opacity: 1,
-  x: 100,
-  // Timing properties
-  duration: 1,
+```tsx interactive="gsap-to-demo"
+// @preview-start
+<div class="box h-20 w-20 rounded-lg bg-purple-500"></div>;
+// @preview-end
+
+gsap.to('.box', {
+  x: 150,
+  rotation: 360,
+  duration: 1.5,
   ease: 'power2.out',
 });
 ```

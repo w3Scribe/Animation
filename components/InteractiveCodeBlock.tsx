@@ -1,9 +1,8 @@
 'use client';
 
-import { getExample, type ExampleConfig } from '@/lib/examples';
 import { Check, Copy, Play } from 'lucide-react';
-import React, { useCallback, useState } from 'react';
-import { CodePlaygroundModal } from './CodePlaygroundModal';
+import React, { useCallback, useMemo, useState } from 'react';
+import { CodeModal } from './CodeModal';
 
 function extractTextContent(node: React.ReactNode): string {
   if (typeof node === 'string') return node;
@@ -15,6 +14,38 @@ function extractTextContent(node: React.ReactNode): string {
     return extractTextContent(children);
   }
   return '';
+}
+
+// Preview marker constants
+const PREVIEW_START = '// @preview-start';
+const PREVIEW_END = '// @preview-end';
+
+// Extract preview HTML from code using markers
+function extractPreviewHTML(code: string): string | null {
+  const startIndex = code.indexOf(PREVIEW_START);
+  const endIndex = code.indexOf(PREVIEW_END);
+
+  if (startIndex === -1 || endIndex === -1 || endIndex <= startIndex) {
+    return null;
+  }
+
+  const previewContent = code
+    .substring(startIndex + PREVIEW_START.length, endIndex)
+    .trim();
+
+  // Return null if content is empty
+  if (!previewContent) {
+    return null;
+  }
+
+  return previewContent;
+}
+
+// Remove preview markers from display code (optional - keeps code cleaner)
+function getDisplayCode(code: string): string {
+  return code
+    .replace(/\/\/ @preview-start[\s\S]*?\/\/ @preview-end\n?/g, '')
+    .trim();
 }
 
 type InteractiveCodeBlockProps = {
@@ -29,13 +60,18 @@ export function InteractiveCodeBlock({
 }: InteractiveCodeBlockProps) {
   const [copied, setCopied] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [example, setExample] = useState<ExampleConfig | null>(null);
 
   const codeText = extractTextContent(children);
 
   // Extract language from data attribute
   const dataLanguage = (props as { 'data-language'?: string })['data-language'];
   const language = dataLanguage || '';
+
+  // Extract preview HTML if markers exist
+  const previewHTML = useMemo(() => extractPreviewHTML(codeText), [codeText]);
+
+  // Show preview button ONLY when preview markers with content exist
+  const showPreview = previewHTML !== null;
 
   const onCopy = useCallback(() => {
     navigator.clipboard.writeText(codeText.trim());
@@ -44,12 +80,8 @@ export function InteractiveCodeBlock({
   }, [codeText]);
 
   const openPlayground = useCallback(() => {
-    const exampleConfig = getExample(exampleId);
-    if (exampleConfig) {
-      setExample(exampleConfig);
-      setIsModalOpen(true);
-    }
-  }, [exampleId]);
+    setIsModalOpen(true);
+  }, []);
 
   const closePlayground = useCallback(() => {
     setIsModalOpen(false);
@@ -65,22 +97,25 @@ export function InteractiveCodeBlock({
         )}
 
         {/* Control buttons */}
-        <div className="absolute top-3 right-3 z-10 flex items-center gap-1">
-          {/* Play button - always visible for interactive blocks */}
-          <button
-            onClick={openPlayground}
-            className="flex items-center gap-1.5 rounded-md bg-violet-500/20 px-2.5 py-1.5 text-xs font-medium text-violet-400 transition-all hover:bg-violet-500/30 hover:text-violet-300"
-            title="Open in Playground"
-          >
-            <Play size={14} className="fill-current" />
-            <span className="hidden sm:inline">Playground</span>
-          </button>
+        <div className="absolute top-3 right-3 z-10 flex items-center gap-2">
+          {/* Run Preview button - visible ONLY with preview markers */}
+          {showPreview && (
+            <button
+              onClick={openPlayground}
+              className="flex items-center gap-1.5 rounded-md bg-purple-600/20 px-2.5 py-1.5 text-xs font-medium text-purple-300 transition-colors hover:bg-purple-600/30 hover:text-purple-200"
+              title="Run Preview"
+            >
+              <Play size={14} className="fill-current" />
+              <span className="hidden sm:inline">Run Preview</span>
+              <span className="sm:hidden">Run</span>
+            </button>
+          )}
 
-          {/* Copy button */}
+          {/* Copy button - always visible */}
           <button
             onClick={onCopy}
-            className="rounded-md p-2 text-[#5c6370] opacity-0 transition-all group-hover:opacity-100 hover:text-white/70"
-            title="Copy code"
+            className="rounded-md p-1.5 text-neutral-400 transition-colors hover:bg-neutral-700 hover:text-white"
+            aria-label="Copy code"
           >
             {copied ? <Check size={16} /> : <Copy size={16} />}
           </button>
@@ -94,12 +129,15 @@ export function InteractiveCodeBlock({
         </pre>
       </div>
 
-      {/* Playground Modal */}
-      {isModalOpen && example && (
-        <CodePlaygroundModal
+      {/* Code Modal - only rendered when preview is available */}
+      {showPreview && (
+        <CodeModal
           isOpen={isModalOpen}
-          onCloseAction={closePlayground}
-          example={example}
+          onClose={closePlayground}
+          exampleId={exampleId}
+          code={codeText}
+          previewHTML={previewHTML}
+          language={language}
         />
       )}
     </>

@@ -1,6 +1,5 @@
 import { CodeBlock } from '@/components/CodeBlock';
 import { InteractiveCodeBlock } from '@/components/InteractiveCodeBlock';
-import { hasExample } from '@/lib/examples';
 import type { MDXComponents } from 'mdx/types';
 
 // Custom pre component that detects interactive code blocks
@@ -9,11 +8,11 @@ function PreComponent(props: React.ComponentProps<'pre'>) {
   const meta = (props as { 'data-meta'?: string })['data-meta'] || '';
   const interactiveMatch = meta.match(/interactive="([^"]+)"/);
 
+  // Use InteractiveCodeBlock when interactive attribute is present
+  // Preview button visibility is controlled by @preview-start/@preview-end markers in the code
   if (interactiveMatch) {
     const exampleId = interactiveMatch[1];
-    if (hasExample(exampleId)) {
-      return <InteractiveCodeBlock exampleId={exampleId} {...props} />;
-    }
+    return <InteractiveCodeBlock exampleId={exampleId} {...props} />;
   }
 
   return <CodeBlock {...props} />;
