@@ -1,5 +1,7 @@
 # useGSAP Hook & Context
 
+![useGSAP Hook React Integration](../seo/gsap-usegasap-hook.jpg)
+
 ---
 
 ## Core Concept

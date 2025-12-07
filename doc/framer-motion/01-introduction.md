@@ -1,5 +1,7 @@
 # Framer Motion: Introduction
 
+![Framer Motion React Animations](../seo/framer-motion-introduction.jpg)
+
 Master smooth animations with Framer Motion, the React animation library built on principles of physics and simplicity.
 
 ---

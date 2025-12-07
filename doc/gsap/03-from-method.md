@@ -1,5 +1,7 @@
 # GSAP from() Method
 
+![GSAP from Method Animation](../seo/gsap-from-method.jpg)
+
 ---
 
 ## Core Concept

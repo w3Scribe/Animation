@@ -1,5 +1,7 @@
 # GSAP Basics: The `to()` Method
 
+![GSAP Basics Animation](../seo/gsap-basics.jpg)
+
 Learn the fundamentals of **GSAP** (GreenSock Animation Platform), starting with the most essential method: `gsap.to()`.
 
 ---

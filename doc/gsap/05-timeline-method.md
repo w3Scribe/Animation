@@ -1,5 +1,7 @@
 # GSAP Timeline Method
 
+![GSAP Timeline Sequencing](../seo/gsap-timeline-method.jpg)
+
 ---
 
 ## What Is It?

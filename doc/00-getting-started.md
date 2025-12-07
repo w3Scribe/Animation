@@ -1,5 +1,7 @@
 # Getting Started with Animations
 
+![Getting Started with Animation](../public/seo/getting-started.jpg)
+
 Welcome to your comprehensive animation learning hub! This platform is designed to teach you modern web animation techniques using industry-standard tools.
 
 ---

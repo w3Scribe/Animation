@@ -1,5 +1,7 @@
 # GSAP fromTo() Method
 
+![GSAP fromTo Method Control](../seo/gsap-fromto-method.jpg)
+
 ---
 
 ## Core Concept

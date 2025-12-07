@@ -27,7 +27,10 @@ export const siteConfig = {
 // Resolve an SEO image for a given doc slug.
 // slugParts like ['gsap', 'basics'] become 'gsap-basics'.
 // We assume images live in /public/seo and are referenced as /seo/{name}.jpg|png.
-export function resolveSeoImage(slugParts: string[] | undefined, title?: string) {
+export function resolveSeoImage(
+  slugParts: string[] | undefined,
+  title?: string
+) {
   const baseAlt = title || siteConfig.name;
 
   // Build a simple filename from the slug array: "gsap-basics"
