@@ -1,7 +1,7 @@
 import { DocsLayout } from '@/components/DocsLayout';
 import { mdxComponents } from '@/components/mdx-components';
 import { getAllDocSlugs, getDocBySlug, getDocNavigation } from '@/lib/docs';
-import { getBaseUrl, siteConfig } from '@/lib/seo';
+import { getBaseUrl, resolveSeoImage, siteConfig } from '@/lib/seo';
 import { Metadata } from 'next';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { notFound } from 'next/navigation';
@@ -27,6 +27,8 @@ export async function generateMetadata({
   const baseUrl = getBaseUrl();
   const url = `${baseUrl}/learn/${resolvedParams.slug.join('/')}`;
 
+  const seoImage = resolveSeoImage(resolvedParams.slug, doc.title);
+
   return {
     title: doc.title,
     description: doc.description,
@@ -38,6 +40,20 @@ export async function generateMetadata({
       description: doc.description,
       type: 'article',
       url,
+      images: [
+        {
+          url: `${baseUrl}${seoImage.url}`,
+          width: seoImage.width,
+          height: seoImage.height,
+          alt: seoImage.alt,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: doc.title,
+      description: doc.description,
+      images: [`${baseUrl}${seoImage.url}`],
     },
   };
 }
