@@ -1,13 +1,13 @@
+import createMDX from '@next/mdx';
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
-  // images : {
-  //   remotePatterns : [
-  //     new URL('https://example.com/images/*')
-  //   ]
-  // }
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
 };
 
-export default nextConfig;
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+});
+
+export default withMDX(nextConfig);

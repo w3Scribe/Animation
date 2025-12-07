@@ -1,0 +1,33 @@
+:root {
+  --bg-body: #09090b;
+  --foreground: #fafafa;
+  --muted: #18181b;
+  --muted-foreground: #a1a1aa;
+  --primary: #6d43ff;
+  --primary-foreground: #fafafa;
+  --border: #27272a;
+  --scroll-thumb: rgba(109, 67, 255, 0.5);
+  --scroll-thumb-hover: rgba(109, 67, 255, 0.7);
+}
+
+body {
+  background: var(--bg-body);
+  color: var(--foreground);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(109, 67, 255, 0.5);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(109, 67, 255, 0.7);
+}
